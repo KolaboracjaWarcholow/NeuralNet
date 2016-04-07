@@ -8,14 +8,14 @@
 #include<iostream>
 #include<fstream>
 #include <string>
+#include "BMPInfoStructures.h"
 
 class BitMap{
 private:
 	std::fstream m_bitmapFile;
 	const char* m_FilePath;
-	int m_numberOfHeaderBytes;
-	int m_widthInPixels;
-	int m_heightInPixels;
+	BITMAPFILEHEADER *m_fileHeader;
+	BITMAPINFOHEADER *m_infoHeader;
 public:
 	BitMap();
 	BitMap(const char* pathToFile);
