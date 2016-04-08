@@ -8,18 +8,27 @@
 #include<iostream>
 #include<fstream>
 #include <string>
-#include "BMPInfoStructures.h"
 
 class BitMap{
 private:
 	std::fstream m_bitmapFile;
-	const char* m_FilePath;
-	BITMAPFILEHEADER *m_fileHeader;
-	BITMAPINFOHEADER *m_infoHeader;
+	const char *m_FilePath;
+	std::string m_bitmapInArray;
+
 public:
 	BitMap();
-	BitMap(const char* pathToFile);
+
+	BitMap(const char *pathToFile);
+
 	void BmpToBinaryArrayConversion();
+
+	void PrintBitmapInBinaryArray();
+
+	void WhenPixelIsBlackInsert1ToArray(char *pixelTab);
+
+	void WhenPixelIsWhiteInsert0ToArray(char *pixelTab);
+
+	void FillingArrayWith0sAnd1s();
 };
 
 
