@@ -57,3 +57,18 @@ void BitMap::FillingArrayWith0sAnd1s(){
 		m_bitmapFile.seekg(1, std::ios::cur);
 	}
 }
+
+
+void BitMap::PrintingArrayWithOtherValues(double valueForWhite, double valueForBlack){
+	int stringNoControl = 0;
+	for(int loopControl1 = 0; loopControl1 <= 15; loopControl1++){
+		for(int loopControl2 = 0; loopControl2 <= 15; loopControl2++){
+			if(m_bitmapInArray[stringNoControl] == '1')
+				std::cout << valueForBlack << " ";
+			else
+				std::cout << valueForWhite << " ";
+			stringNoControl++;
+		}
+		std::cout << std::endl;
+	}
+}

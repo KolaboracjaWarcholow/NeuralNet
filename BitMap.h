@@ -29,6 +29,8 @@ public:
 	void WhenPixelIsWhiteInsert0ToArray(char *pixelTab);
 
 	void FillingArrayWith0sAnd1s();
+
+	void PrintingArrayWithOtherValues(double valueForWhite, double valueForBlack);
 };
 
 
