@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-const double BETA = 1.0;
+const double BETA = 0.01;
 
 double ActivationFunction(double NeuronOutput)
 {

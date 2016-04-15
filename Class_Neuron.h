@@ -2,6 +2,9 @@
 #define CLASS_NEURON_H
 #include <iostream>
 #include <vector>
+#include <cstdlib> 
+#include <ctime> 
+#include "Struct_Topology.h"
 #include "Class_Connection.h"
 
 class Neuron
@@ -14,9 +17,11 @@ public:
 	Neuron();
 	Neuron(double);
 	Neuron(const int, std::vector<Connection>&);
-	Neuron(const int, std::vector<Connection>&, double[]);
-	void ChangeInput(double newInput);
+	void SumUpOutputs(double);
+	void ChangeOutput(double);
 	double GetOutput();
+	double GetInput();
+	void ChangeError(double);
 	~Neuron();
 };
 #endif CLASS_NEURON_H

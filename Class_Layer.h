@@ -4,6 +4,7 @@
 #include <vector>
 #include "Class_Neuron.h"
 #include "Class_Connection.h"
+#include "Struct_Topology.h"
 
 class Layer
 {
