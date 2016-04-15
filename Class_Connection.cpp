@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Class_Connection.h"
-#include <iostream>
 
 Connection::Connection()
 	{
