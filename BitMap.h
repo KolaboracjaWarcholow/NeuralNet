@@ -13,24 +13,20 @@ class BitMap{
 private:
 	std::fstream m_bitmapFile;
 	const char *m_FilePath;
-	std::string m_bitmapInArray;
+	double *m_bitmapArray;
 
 public:
 	BitMap();
 
 	BitMap(const char *pathToFile);
 
-	void BmpToBinaryArrayConversion();
+	double *ProcessingBitmapIntoArrayForNeuralNet(double valueForWhite, double valueForBlack);
 
-	void PrintBitmapInBinaryArray();
+	void BlackPixelToNumber(char *onePixel, double valueForBlack, int arrayNumberControl);
 
-	void WhenPixelIsBlackInsert1ToArray(char *pixelTab);
+	void WhitePixelToNumber(char *onePixel, double valueForWhite, int arrayNumberControl);
 
-	void WhenPixelIsWhiteInsert0ToArray(char *pixelTab);
-
-	void FillingArrayWith0sAnd1s();
-
-	void PrintingArrayWithOtherValues(double valueForWhite, double valueForBlack);
+	void RevertingBitmapArray(int arrayNumberControl, int bitmapWidth, int bitmapHeight);
 };
 
 
