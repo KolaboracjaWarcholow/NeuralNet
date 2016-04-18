@@ -16,7 +16,7 @@ BitMap::BitMap(){
 BitMap::BitMap(const char *pathToFile){
 	m_FilePath = pathToFile;
 	m_bitmapFile.open(pathToFile, std::ios::in | std::ios::binary);
-	m_bitmapArray = new double;
+	m_bitmapArray = new double[256];
 }
 
 
@@ -32,8 +32,6 @@ double *BitMap::ProcessingBitmapIntoArrayForNeuralNet(double valueForWhite, doub
 		arrayNumberControl++;
 	}
 	RevertingBitmapArray(arrayNumberControl, 16, 16);
-	for(int i = 0; i <= 256; i++)
-		std::cout << m_bitmapArray[i];
 	return m_bitmapArray;
 }
 
@@ -50,13 +48,17 @@ void BitMap::WhitePixelToNumber(char onePixel[bitsInPixel], double valueForWhite
 void BitMap::RevertingBitmapArray(int arrayNumberControl, int bitmapWidth, int bitmapHeight){
 	double *temp = new double;
 	int row = bitmapHeight - 1;
+	int number;
 	int tempArrayNumberControl = 0;
 	do{
 		for(arrayNumberControl = 0; arrayNumberControl < 16; arrayNumberControl++){
-			temp[tempArrayNumberControl] = m_bitmapArray[((row * bitmapWidth) + arrayNumberControl)];
+			number =((row * bitmapWidth) + arrayNumberControl);
+			temp[tempArrayNumberControl] = m_bitmapArray[number];
+			tempArrayNumberControl++;
 		}
-		row++;
-	} while(row != 0);
+		row--;
+	} while(row >= 0);
 	m_bitmapArray = temp;
-	delete temp;
+	for(int i = 0; i<256;i++)
+	std::cout << m_bitmapArray[i];
 }

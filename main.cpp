@@ -5,8 +5,8 @@
 using namespace std;
 
 int main(){
-	const char *path = "/Users/apple/Documents/a.bmp";
-	BitMap newBmp = BitMap(path);
+	const char *path = "/Users/apple/Documents/b.bmp";
+	BitMap newBmp = BitMap("/Users/apple/Documents/b.bmp");
 	//newBmp.BmpToBinaryArrayConversion();
 	//newBmp.PrintBitmapInBinaryArray();
 	//std::cout << std::endl;

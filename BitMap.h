@@ -18,6 +18,7 @@ private:
 public:
 	BitMap();
 
+
 	BitMap(const char *pathToFile);
 
 	double *ProcessingBitmapIntoArrayForNeuralNet(double valueForWhite, double valueForBlack);
@@ -27,6 +28,7 @@ public:
 	void WhitePixelToNumber(char *onePixel, double valueForWhite, int arrayNumberControl);
 
 	void RevertingBitmapArray(int arrayNumberControl, int bitmapWidth, int bitmapHeight);
+
 };
 
 
