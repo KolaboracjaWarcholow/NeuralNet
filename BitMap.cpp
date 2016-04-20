@@ -10,65 +10,63 @@ static const char blackColor = '\0';
 static const char whiteColor = '\xff';
 
 BitMap::BitMap(){
-	m_FilePath = NULL;
+    m_FilePath = NULL;
+
+    m_bitmapArray = new double[256];
 }
 
 BitMap::BitMap(const char *pathToFile){
-	m_FilePath = pathToFile;
-	m_bitmapFile.open(pathToFile, std::ios::in | std::ios::binary);
-}
-
-void BitMap::BmpToBinaryArrayConversion(){
-	if(m_bitmapFile.good()){
-		m_bitmapFile.seekg(bitsOffSet, std::ios::beg);
-		BitMap::FillingArrayWith0sAnd1s();
-
-	}
-
-}
-
-void BitMap::PrintBitmapInBinaryArray(){
-	int stringNoControl = 0;
-	for(int loopControl1 = 0; loopControl1 <= 15; loopControl1++){
-		for(int loopControl2 = 0; loopControl2 <= 15; loopControl2++){
-			std::cout << m_bitmapInArray[stringNoControl];
-			stringNoControl++;
-		}
-		std::cout << std::endl;
-	}
-}
-
-void BitMap::WhenPixelIsBlackInsert1ToArray(char *pixelTab){
-	if((pixelTab[0] == blackColor) && (pixelTab[1] == blackColor) && (pixelTab[2] == blackColor))
-		m_bitmapInArray = m_bitmapInArray + "1";
-}
-
-void BitMap::WhenPixelIsWhiteInsert0ToArray(char *pixelTab){
-	if((pixelTab[0] == whiteColor) && (pixelTab[1] == whiteColor) && (pixelTab[2] == whiteColor))
-		m_bitmapInArray = m_bitmapInArray + "0";
-}
-
-void BitMap::FillingArrayWith0sAnd1s(){
-	char onePixel[bitsInPixel];
-	while(!m_bitmapFile.eof()){
-		m_bitmapFile.read(onePixel, bitsInPixel);
-		BitMap::WhenPixelIsBlackInsert1ToArray(onePixel);
-		BitMap::WhenPixelIsWhiteInsert0ToArray(onePixel);
-		m_bitmapFile.seekg(1, std::ios::cur);
-	}
+    m_FilePath = pathToFile;
+    m_bitmapFile.open(pathToFile, std::ios::in | std::ios::binary);
+    m_bitmapArray = new double[256];
 }
 
 
-void BitMap::PrintingArrayWithOtherValues(double valueForWhite, double valueForBlack){
-	int stringNoControl = 0;
-	for(int loopControl1 = 0; loopControl1 <= 15; loopControl1++){
-		for(int loopControl2 = 0; loopControl2 <= 15; loopControl2++){
-			if(m_bitmapInArray[stringNoControl] == '1')
-				std::cout << valueForBlack << " ";
-			else
-				std::cout << valueForWhite << " ";
-			stringNoControl++;
-		}
-		std::cout << std::endl;
-	}
+double *BitMap::ProcessingBitmapIntoArrayForNeuralNet(double valueForWhite, double valueForBlack){
+    m_bitmapFile.seekg(bitsOffSet, std::ios::beg);
+    int arrayNumberControl = 0;
+    char onePixel[bitsInPixel];
+    while(!m_bitmapFile.eof()){
+        m_bitmapFile.read(onePixel, bitsInPixel);
+        BlackPixelToNumber(onePixel, valueForBlack, arrayNumberControl);
+        WhitePixelToNumber(onePixel, valueForWhite, arrayNumberControl);
+        //m_bitmapFile.seekg(1, std::ios::cur);
+        arrayNumberControl++;
+    }
+    RevertingBitmapArray(arrayNumberControl, 16, 16);
+    return m_bitmapArray;
+}
+
+void BitMap::BlackPixelToNumber(char onePixel[bitsInPixel], double valueForBlack, int arrayNumberControl){
+    if((onePixel[0] == blackColor) && (onePixel[1] == blackColor) && (onePixel[2] == blackColor))
+        m_bitmapArray[arrayNumberControl] = valueForBlack;
+}
+
+void BitMap::WhitePixelToNumber(char onePixel[bitsInPixel], double valueForWhite, int arrayNumberControl){
+    if((onePixel[0] == whiteColor) && (onePixel[1] == whiteColor) && (onePixel[2] == whiteColor))
+        m_bitmapArray[arrayNumberControl] = valueForWhite;
+}
+
+void BitMap::RevertingBitmapArray(int arrayNumberControl, int bitmapWidth, int bitmapHeight){
+    double *temp = new double[256];
+    int row = bitmapHeight - 1;
+    int number;
+    int tempArrayNumberControl = 0;
+    do{
+        for(arrayNumberControl = 0; arrayNumberControl < 16; arrayNumberControl++){
+            number =((row * bitmapWidth) + arrayNumberControl);
+            temp[tempArrayNumberControl] = m_bitmapArray[number];
+            tempArrayNumberControl++;
+        }
+        row--;
+    } while(row >= 0);
+    m_bitmapArray = temp;
+    for(int i = 0; i < 256; i++)
+        std::cout << temp[i];
+
+}
+
+BitMap::~BitMap(){
+    delete[] m_bitmapArray;
+    m_bitmapFile.close();
 }
