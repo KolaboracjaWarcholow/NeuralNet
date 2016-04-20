@@ -34,17 +34,22 @@ void MainWindow::on_clearButton_clicked()
     area->clear();
 }
 
-void MainWindow::on_translateButton_clicked()
-{
+void MainWindow::on_translateButton_clicked(){
     QPixmap pixMap = ui->graphicsView->grab();
-    pixMap = pixMap.scaled(16,16,Qt::KeepAspectRatio,Qt::FastTransformation);
-    pixMap.save("/Users/apple/Documents/b.bmp","BMP");
+    pixMap = pixMap.scaled(16, 16, Qt::KeepAspectRatio, Qt::FastTransformation);
+    pixMap.save("/Users/apple/Documents/b.bmp", "BMP");
     const char *path = new char;
     path = "/Users/apple/Documents/b.bmp";
-    BitMap newBmp = BitMap(path);
+    BitMap newBmp(path);
     double *values = new double[256];
-    values = newBmp.ProcessingBitmapIntoArrayForNeuralNet(0,1);
-    delete values;
+    values = newBmp.ProcessingBitmapIntoArrayForNeuralNet(0, 1);
+    QString stringOfBytes;
+    for(int loopControl = 1; loopControl <= 256; loopControl++){
+        stringOfBytes = stringOfBytes + QString::number(values[loopControl - 1]);
+        if(loopControl % 16 == 0)
+            stringOfBytes = stringOfBytes + "\n";
+    }
+    ui->textEdit->setPlainText(stringOfBytes);
 }
 
 void MainWindow::on_translateButton_released()
