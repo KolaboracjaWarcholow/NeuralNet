@@ -11,9 +11,8 @@ class Layer
 public:
 
 	std::vector <Neuron> myLayer;
-
-	Layer(int);
-	Layer(const int, const int, std::vector<Connection>&);
-	Layer(const int, const int, std::vector<Connection>&, double[]);
+	Layer();
+	void FillOutputLayer(int);
+	void FillLayer(const int, const int, std::vector<Connection>&);
 };
 #endif

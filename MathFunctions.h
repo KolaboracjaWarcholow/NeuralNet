@@ -1,17 +1,19 @@
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#ifndef MATH_FUNCTIONS_H
+#define MATH_FUNCTIONS_H
 #include <iostream>
 #include <cmath>
+#include <random>
 
-const double BETA = 0.01;
+const double BETA = 1;
 
 double ActivationFunction(double NeuronOutput)
 {
 	return 1 / (1 + exp(-BETA * NeuronOutput));
 }
 
-double Derivative(double Input)
+double CalculateDerivative(double Input)
 {
-	return	exp(-Input) / pow((1 + exp(-Input)), 2);
+	return	Input * (1 - Input);
 }
+
 #endif 

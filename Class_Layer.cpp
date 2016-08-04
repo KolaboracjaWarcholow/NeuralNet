@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Class_Layer.h"
 
-
-Layer::Layer(int NeuronsNumber)
+Layer::Layer()
+{}
+void Layer::FillOutputLayer(int NeuronsNumber)
 {
 	for (int i = 0; i < NeuronsNumber; i++)
 	{
@@ -11,7 +12,7 @@ Layer::Layer(int NeuronsNumber)
 	}
 };
 
-Layer::Layer(const int NeuronsInNextLayer, const int NeuronsInThisLayer, std::vector<Connection> &ConnectionsVector)
+void Layer::FillLayer(const int NeuronsInNextLayer, const int NeuronsInThisLayer, std::vector<Connection> &ConnectionsVector)
 {
 	for (int i = 0; i < NeuronsInThisLayer + 1; ++i)
 	{
@@ -20,12 +21,12 @@ Layer::Layer(const int NeuronsInNextLayer, const int NeuronsInThisLayer, std::ve
 	}
 }
 
-Layer::Layer(const int NeuronsInNextLayer, const int NeuronsInThisLayer, std::vector<Connection> &ConnectionsVector, double InputArray[])
-{
-	for (int i = 0; i < NeuronsInThisLayer + 1; i++)
-	{
-		Neuron newNeuron(NeuronsInNextLayer, ConnectionsVector);
-		newNeuron.ChangeOutput(InputArray[i]);
-		myLayer.push_back(newNeuron);
-	}
-}
+//Layer::Layer(const int NeuronsInNextLayer, const int NeuronsInThisLayer, std::vector<Connection> &ConnectionsVector, double InputArray[])
+//{
+//	for (int i = 0; i < NeuronsInThisLayer + 1; i++)
+//	{
+//		Neuron newNeuron(NeuronsInNextLayer, ConnectionsVector);
+//		newNeuron.ChangeOutput(InputArray[i]);
+//		myLayer.push_back(newNeuron);
+//	}
+//}

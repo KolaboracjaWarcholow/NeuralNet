@@ -4,10 +4,12 @@ class Connection
 {
 private:
 	double m_Weight;
+	double m_DeltaWeight;
 public:
-	void ChangeWeight(double newWeight);
+	void ChangeWeight(double);
 	double GetWeight();
-	Connection();
+	void ChangeDeltaWeight(double);
+	double GetDeltaWeight();
 	Connection(double);
 };
 #endif
